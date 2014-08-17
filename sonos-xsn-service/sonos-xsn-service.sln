@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sonos-xsn-service", "sonos-xsn-service\sonos-xsn-service.csproj", "{9CB7C065-B2E4-4A30-BAF4-A8A7E5567C44}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A9DFEA4C-AE4E-4D30-BFBB-9168CC53A6C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json.Net40", "Libraries\Newtonsoft.Json\Newtonsoft.Json.Net40.csproj", "{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CB7C065-B2E4-4A30-BAF4-A8A7E5567C44}.Debug|x86.ActiveCfg = Debug|x86
+		{9CB7C065-B2E4-4A30-BAF4-A8A7E5567C44}.Debug|x86.Build.0 = Debug|x86
+		{9CB7C065-B2E4-4A30-BAF4-A8A7E5567C44}.Release|x86.ActiveCfg = Release|x86
+		{9CB7C065-B2E4-4A30-BAF4-A8A7E5567C44}.Release|x86.Build.0 = Release|x86
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Debug|x86.Build.0 = Debug|Any CPU
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Release|x86.ActiveCfg = Release|Any CPU
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D} = {A9DFEA4C-AE4E-4D30-BFBB-9168CC53A6C1}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = sonos-xsn-service\sonos-xsn-service.csproj
+	EndGlobalSection
+EndGlobal

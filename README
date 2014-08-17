@@ -1,0 +1,21 @@
+xenim streaming service SONOS Integration
+==========================================
+
+As a frequent podcast listener I am using the xenim streaming service a lot to listen to my favourite podcasts live 
+shows.
+
+Ever since I've got my SONOS wireless multi-room audio system I wanted to integrate my favourite live podcast service
+with the convenience of the SONOS platform.
+
+Aside from supporting a lot of good music services the SONOS platform offers the option to add your own services through
+it's great interface.
+
+This application is meant to run on a server reachable by your SONOS system. It will watch out for currently running 
+live streams on xsn and allows you to listen to them live.
+
+How to set-up
+==============
+
+Pre-Requisites:
+- .net 4.0 Framework (Windows) or Mono >3.2 (Linux, MacOS)
+

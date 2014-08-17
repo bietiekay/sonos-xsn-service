@@ -1,0 +1,5 @@
+.DS_Store
+sonos-xsn-service/sonos-xsn-service/bin/
+sonos-xsn-service/sonos-xsn-service/obj/
+sonos-xsn-service/Libraries/Newtonsoft.Json/bin/
+sonos-xsn-service/Libraries/Newtonsoft.Json/obj/
