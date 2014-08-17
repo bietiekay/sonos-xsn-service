@@ -71,13 +71,16 @@ namespace sonosxsnservice
 				Output = generateRootDirectory (xsnService);
 				break;
 			case "LIVE":
-				Console.WriteLine("Live Directory");
+				Console.WriteLine ("Live Directory");
+				Output = generateLiveDirectory (xsnService);
 				break;
 			case "RECENT":
 				Console.WriteLine ("Recent Directory");
+				Output = generateRecentDirectory (xsnService);
 				break;
 			case "UPCOMING":
 				Console.WriteLine ("Upcoming Directory");
+				Output = generateUpcomingDirectory (xsnService);
 				break;
 			default:
 				break;
@@ -102,9 +105,9 @@ namespace sonosxsnservice
 			// Live Directory
 			Output.Append (@"<ns1:mediaCollection><ns1:id>LIVE</ns1:id><ns1:itemType>collection</ns1:itemType><ns1:title>");
 			Output.Append ("Live Shows (" + xsnService.GetCurrentLiveFeed ().items.Count + ")");
-			Output.Append (xsnService.GetCurrentLiveFeed ().items.Count);
-			Output.Append (@")""</ns1:title><ns1:canPlay>false</ns1:canPlay></ns1:mediaCollection>");
+			Output.Append (@"</ns1:title><ns1:canPlay>false</ns1:canPlay></ns1:mediaCollection>");
 
+			/*
 			// Recent Directory
 			Output.Append (@"<ns1:mediaCollection><ns1:id>RECENT</ns1:id><ns1:itemType>collection</ns1:itemType><ns1:title>");
 			Output.Append ("Recent Shows (" + xsnService.GetCurrentRecentFeed ().items.Count + ")");
@@ -114,24 +117,150 @@ namespace sonosxsnservice
 			Output.Append (@"<ns1:mediaCollection><ns1:id>UPCOMING</ns1:id><ns1:itemType>collection</ns1:itemType><ns1:title>");
 			Output.Append ("Upcoming Shows (" + xsnService.GetCurrentUpcomingFeed ().items.Count + ")");
 			Output.Append (@"</ns1:title><ns1:canPlay>false</ns1:canPlay></ns1:mediaCollection>");
+			*/
 
 			Output.Append (@"</ns1:getMetadataResult></ns1:getMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
 
 			return Output.ToString();
 		}
 
+		/// <summary>
+		/// this will generate the live directory listing
+		/// </summary>
+		/// <returns>The live directory xml</returns>
+		/// <param name="xsnService">Xsn service.</param>
+		private static String generateLiveDirectory(xsnservice xsnService)
+		{
+			StringBuilder Output = new StringBuilder ();
+
+			Output.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getMetadataResponse><ns1:getMetadataResult>");
+			Output.Append ("<ns1:index>0</ns1:index>");
+			Output.Append ("<ns1:count>" + xsnService.GetCurrentLiveFeed().items.Count + "</ns1:count>");
+			Output.Append ("<ns1:total>" + xsnService.GetCurrentLiveFeed().items.Count + "</ns1:total>");
+
+			foreach (xsn_live_feed_item Item in xsnService.GetCurrentLiveFeed().items)
+			{
+				Output.Append("<ns1:mediaMetadata><ns1:id>"+Item.unique_id+"</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>"+Item.title+"</ns1:title>");
+				Output.Append("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>"+Item.author_name+"</ns1:artistId><ns1:artist />");
+				Output.Append("<ns1:albumId>"+Item.channel+"</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>"+Item.icon+"</ns1:albumArtURI>");
+				Output.Append("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata><ns1:dynamic><ns1:property><ns1:name>isStarred</ns1:name><ns1:value>5</ns1:value>");
+				Output.Append("</ns1:property><ns1:property><ns1:name>isRead</ns1:name><ns1:value>true</ns1:value></ns1:property></ns1:dynamic></ns1:mediaMetadata>");
+			}
+
+			Output.Append ("</ns1:getMetadataResult></ns1:getMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+
+			return Output.ToString();
+		}
+
+		/// <summary>
+		/// this will generate the recent directory listing
+		/// </summary>
+		/// <returns>The recent directory xml</returns>
+		/// <param name="xsnService">Xsn service.</param>
+		private static String generateRecentDirectory(xsnservice xsnService)
+		{
+			StringBuilder Output = new StringBuilder ();
+
+			Output.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getMetadataResponse><ns1:getMetadataResult>");
+			Output.Append ("<ns1:index>0</ns1:index>");
+			Output.Append ("<ns1:count>" + xsnService.GetCurrentRecentFeed().items.Count + "</ns1:count>");
+			Output.Append ("<ns1:total>" + xsnService.GetCurrentRecentFeed().items.Count + "</ns1:total>");
+
+			foreach (xsn_recent_feed_item Item in xsnService.GetCurrentRecentFeed().items)
+			{
+				Output.Append("<ns1:mediaMetadata><ns1:id>"+Item.unique_id+"</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>"+Item.title+"</ns1:title>");
+				Output.Append("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>"+Item.author_name+"</ns1:artistId><ns1:artist />");
+				Output.Append("<ns1:albumId>"+Item.unique_id+"</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>"+Item.icon+"</ns1:albumArtURI>");
+				Output.Append("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata><ns1:dynamic><ns1:property><ns1:name>isStarred</ns1:name><ns1:value>5</ns1:value>");
+				Output.Append("</ns1:property><ns1:property><ns1:name>isRead</ns1:name><ns1:value>true</ns1:value></ns1:property></ns1:dynamic></ns1:mediaMetadata>");
+			}
+
+			Output.Append ("</ns1:getMetadataResult></ns1:getMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+
+			return Output.ToString();
+		}
+
+		/// <summary>
+		/// this will generate the upcoming directory listing
+		/// </summary>
+		/// <returns>The upcoming directory xml</returns>
+		/// <param name="xsnService">Xsn service.</param>
+		private static String generateUpcomingDirectory(xsnservice xsnService)
+		{
+			StringBuilder Output = new StringBuilder ();
+
+			Output.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getMetadataResponse><ns1:getMetadataResult>");
+			Output.Append ("<ns1:index>0</ns1:index>");
+			Output.Append ("<ns1:count>" + xsnService.GetCurrentUpcomingFeed().items.Count + "</ns1:count>");
+			Output.Append ("<ns1:total>" + xsnService.GetCurrentUpcomingFeed().items.Count + "</ns1:total>");
+
+			foreach (xsn_upcoming_feed_item Item in xsnService.GetCurrentUpcomingFeed().items)
+			{
+				Output.Append("<ns1:mediaMetadata><ns1:id>"+Item.unique_id+"</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>"+Item.title+"</ns1:title>");
+				Output.Append("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>"+Item.author_name+"</ns1:artistId><ns1:artist />");
+				Output.Append("<ns1:albumId>"+Item.unique_id+"</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>"+Item.icon+"</ns1:albumArtURI>");
+				Output.Append("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata><ns1:dynamic><ns1:property><ns1:name>isStarred</ns1:name><ns1:value>5</ns1:value>");
+				Output.Append("</ns1:property><ns1:property><ns1:name>isRead</ns1:name><ns1:value>true</ns1:value></ns1:property></ns1:dynamic></ns1:mediaMetadata>");
+			}
+
+			Output.Append ("</ns1:getMetadataResult></ns1:getMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+
+			return Output.ToString();
+		}
 		#endregion
 
 		#endregion
 
 		public static String getMediaMetadata (xsnservice xsnService, String PostInputData)
 		{
-			throw new NotImplementedException ();
+			StringBuilder Output = new StringBuilder ();
+			// get the Directory
+			String ItemID = PostInputData.Remove (0, PostInputData.IndexOf ("<id>") + 4);
+			ItemID = ItemID.Substring(0,ItemID.IndexOf ("</id>"));
+
+			// find that item
+
+			foreach (xsn_live_feed_item Item in xsnService.GetCurrentLiveFeed().items)
+			{
+				if (Item.unique_id == ItemID)
+				{
+					// found it!
+
+					Output.Append ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body>");
+					Output.Append ("<ns1:getMediaMetadataResponse><ns1:getMediaMetadataResult>");
+
+
+					Output.Append ("<ns1:id>" + Item.unique_id + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + Item.title + "</ns1:title><ns1:mimeType>audio/mpeg3</ns1:mimeType>");
+					Output.Append ("<ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist /><ns1:albumId>" + Item.channel + "</ns1:albumId>");
+					Output.Append ("<ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
+					Output.Append ("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata><ns1:dynamic><ns1:property><ns1:name>isStarred</ns1:name><ns1:value>5</ns1:value>");
+					Output.Append ("</ns1:property><ns1:property><ns1:name>isRead</ns1:name><ns1:value>true</ns1:value></ns1:property></ns1:dynamic></ns1:getMediaMetadataResult></ns1:getMediaMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+				}
+			}
+
+			return Output.ToString();
 		}
 
 		public static String getMediaURI (xsnservice xsnService, String PostInputData)
 		{
-			throw new NotImplementedException ();
+			StringBuilder Output = new StringBuilder ();
+			// get the Directory
+			String ItemID = PostInputData.Remove (0, PostInputData.IndexOf ("<id>") + 4);
+			ItemID = ItemID.Substring(0,ItemID.IndexOf ("</id>"));
+
+			// find that item
+
+			foreach (xsn_live_feed_item Item in xsnService.GetCurrentLiveFeed().items)
+			{
+				if (Item.unique_id == ItemID)
+				{
+					// found it!
+
+					Output.Append ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getMediaURIResponse><ns1:getMediaURIResult>"+Item.streams[0]+"</ns1:getMediaURIResult></ns1:getMediaURIResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+				}
+			}
+
+			return Output.ToString();
 		}
 	}
 }

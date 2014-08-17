@@ -77,11 +77,14 @@ namespace sonosxsnservice.HTTP
 					break;
 				case "GETMEDIAMETADATA":
 					Console.WriteLine ("getMediaMetadata called");
+					SMAPIAnswer = SMAPI.getMediaMetadata (xsnCurrentData, data);
 					break;
 				case "GETMEDIAURI":
 					Console.WriteLine ("getMediaURI called");
+					SMAPIAnswer = SMAPI.getMediaURI (xsnCurrentData, data);
 					break;
 				default:
+					Console.WriteLine ("Unknown: " + SOAPACTION);
 					break;
 				}
 
