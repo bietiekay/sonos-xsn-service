@@ -1,8 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="sonos-xsn-service/sonos-xsn-service/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="sonos-xsn-service/sonos-xsn-service/Sonos Music API/SMAPI Methods/SMAPIMethods.cs">
     <Files>
-      <File FileName="sonos-xsn-service/sonos-xsn-service/Program.cs" Line="26" Column="26" />
+      <File FileName="sonos-xsn-service/sonos-xsn-service/Program.cs" Line="122" Column="122" />
+      <File FileName="sonos-xsn-service/sonos-xsn-service/Sonos Music API/HTTPServer.cs" Line="29" Column="29" />
+      <File FileName="sonos-xsn-service/sonos-xsn-service/xsnservice.cs" Line="6" Column="6" />
+      <File FileName="sonos-xsn-service/sonos-xsn-service/configuration.json" Line="20" Column="20" />
+      <File FileName="sonos-xsn-service/sonos-xsn-service/Configuration/Configuration.cs" Line="44" Column="44" />
+      <File FileName="sonos-xsn-service/sonos-xsn-service/Sonos Music API/HandleSMAPIRequests.cs" Line="37" Column="37" />
+      <File FileName="sonos-xsn-service/sonos-xsn-service/Sonos Music API/SMAPI Methods/SMAPIMethods.cs" Line="3" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

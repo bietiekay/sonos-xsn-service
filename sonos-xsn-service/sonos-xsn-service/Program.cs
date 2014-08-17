@@ -33,6 +33,8 @@ namespace sonosxsnservice
 			Thread thread = new Thread(new ThreadStart(httpServer.listen));
 			thread.Start();
 
+			//SMAPI.getMetadata(null,"<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\"><s:Header>\t<credentials xmlns=\"http://www.sonos.com/Services/1.1\"><deviceId>B8-E9-37-38-19-6C:6</deviceId><deviceProvider>Sonos</deviceProvider></credentials></s:Header><s:Body><getMetadata xmlns=\"http://www.sonos.com/Services/1.1\"><id>root</id><index>0</index><count>100</count></getMetadata></s:Body></s:Envelope>\n");
+
 			#endregion
 
 			#endregion
