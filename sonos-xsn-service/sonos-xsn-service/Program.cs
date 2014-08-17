@@ -28,13 +28,11 @@ namespace sonosxsnservice
 			#region built-in HTTP server
 			Console.WriteLine("Starting http server...");
 			HttpServer httpServer;
-			if (args.GetLength(0) > 0) {
-				httpServer = new MyHttpServer("127.0.0.1",Convert.ToInt16(args[0]));
-			} else {
-				httpServer = new MyHttpServer("127.0.0.1",8080);
-			}
+
+			httpServer = new SonosSMAPIServer(myConfiguration.GetHTTPListeningIP(),myConfiguration.GetHTTPListeningPort(), _Thread);
 			Thread thread = new Thread(new ThreadStart(httpServer.listen));
 			thread.Start();
+
 			#endregion
 
 			#endregion

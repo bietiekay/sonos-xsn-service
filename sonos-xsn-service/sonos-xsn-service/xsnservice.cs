@@ -36,18 +36,19 @@ namespace sonosxsnservice
 
 					// Live Feed
 					CurrentLiveFeed = xsnDeserializer.UpdateLiveFeed(myConfiguration.GetLiveFeedURL());
-					if (CurrentLiveFeed != null)
+					/*if (CurrentLiveFeed != null)
 						Console.WriteLine("Updated xsn Live Feed - "+CurrentLiveFeed.items.Count+" streams online");
-
+					*/
 					// Upcoming Feed
 					CurrentUpcomingFeed = xsnDeserializer.UpdateUpcomingFeed(myConfiguration.GetUpcomingFeedURL());
-					if (CurrentUpcomingFeed != null)
+					/*if (CurrentUpcomingFeed != null)
 						Console.WriteLine("Updated xsn Upcoming Feed - "+CurrentUpcomingFeed.items.Count+" streams upcoming");
-
+					*/
 					// Recent Feed
 					CurrentRecentFeed = xsnDeserializer.UpdateRecentFeed(myConfiguration.GetRecentFeedURL());
-					if (CurrentRecentFeed != null)
+					/*if (CurrentRecentFeed != null)
 						Console.WriteLine("Updated xsn Recent Feed - "+CurrentRecentFeed.items.Count+" streams done");
+					*/
 				}
 				catch(Exception e)
 				{
@@ -56,6 +57,23 @@ namespace sonosxsnservice
 				}
 				Thread.Sleep (myConfiguration.GetPollingInterval()*1000);
 			}
+		}
+		#endregion
+
+		#region Read Methods
+		public xsn_live_feed GetCurrentLiveFeed()
+		{
+			return CurrentLiveFeed;
+		}
+
+		public xsn_recent_feed GetCurrentRecentFeed()
+		{
+			return CurrentRecentFeed;
+		}
+
+		public xsn_upcoming_feed GetCurrentUpcomingFeed()
+		{
+			return CurrentUpcomingFeed;
 		}
 		#endregion
 	}

@@ -85,11 +85,11 @@ namespace sonosxsnservice.HTTP {
 		}
 
 		public void readHeaders() {
-			Console.WriteLine("readHeaders()");
+			//Console.WriteLine("readHeaders()");
 			String line;
 			while ((line = streamReadLine(inputStream)) != null) {
 				if (line.Equals("")) {
-					Console.WriteLine("got headers");
+					//Console.WriteLine("got headers");
 					return;
 				}
 
@@ -104,7 +104,7 @@ namespace sonosxsnservice.HTTP {
 				}
 
 				string value = line.Substring(pos, line.Length - pos);
-				Console.WriteLine("header: {0}:{1}",name,value);
+				//Console.WriteLine("header: {0}:{1}",name,value);
 				httpHeaders[name] = value;
 			}
 		}
@@ -121,7 +121,7 @@ namespace sonosxsnservice.HTTP {
 			// we hand him needs to let him see the "end of the stream" at this content 
 			// length, because otherwise he won't know when he's seen it all! 
 
-			Console.WriteLine("get post data start");
+			//Console.WriteLine("get post data start");
 			int content_len = 0;
 			MemoryStream ms = new MemoryStream();
 			if (this.httpHeaders.ContainsKey("Content-Length")) {
@@ -150,7 +150,7 @@ namespace sonosxsnservice.HTTP {
 				}
 				ms.Seek(0, SeekOrigin.Begin);
 			}
-			Console.WriteLine("get post data end");
+			//Console.WriteLine("get post data end");
 			srv.handlePOSTRequest(this, new StreamReader(ms));
 
 		}
@@ -197,45 +197,7 @@ namespace sonosxsnservice.HTTP {
 		public abstract void handlePOSTRequest(HttpProcessor p, StreamReader inputData);
 	}
 
-	public class MyHttpServer : HttpServer {
-		public MyHttpServer(String ListeningIPAddress, int ListeningPort)
-			: base(ListeningIPAddress,ListeningPort) {
-		}
-		public override void handleGETRequest (HttpProcessor p)
-		{
 
-			if (p.http_url.Equals ("/Test.png")) {
-				Stream fs = File.Open("../../Test.png",FileMode.Open);
-
-				p.writeSuccess("image/png");
-				fs.CopyTo (p.outputStream.BaseStream);
-				p.outputStream.BaseStream.Flush ();
-			}
-
-			Console.WriteLine("request: {0}", p.http_url);
-			p.writeSuccess();
-			p.outputStream.WriteLine("<html><body><h1>test server</h1>");
-			p.outputStream.WriteLine("Current Time: " + DateTime.Now.ToString());
-			p.outputStream.WriteLine("url : {0}", p.http_url);
-
-			p.outputStream.WriteLine("<form method=post action=/form>");
-			p.outputStream.WriteLine("<input type=text name=foo value=foovalue>");
-			p.outputStream.WriteLine("<input type=submit name=bar value=barvalue>");
-			p.outputStream.WriteLine("</form>");
-		}
-
-		public override void handlePOSTRequest(HttpProcessor p, StreamReader inputData) {
-			Console.WriteLine("POST request: {0}", p.http_url);
-			string data = inputData.ReadToEnd();
-
-			p.writeSuccess();
-			p.outputStream.WriteLine("<html><body><h1>test server</h1>");
-			p.outputStream.WriteLine("<a href=/test>return</a><p>");
-			p.outputStream.WriteLine("postbody: <pre>{0}</pre>", data);
-
-
-		}
-	}
 
 }
 
