@@ -49,7 +49,9 @@
     <None Include="..\..\README">
       <Link>README</Link>
     </None>
-    <None Include="configuration.json" />
+    <None Include="configuration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Libraries\Newtonsoft.Json\Newtonsoft.Json.Net40.csproj">
