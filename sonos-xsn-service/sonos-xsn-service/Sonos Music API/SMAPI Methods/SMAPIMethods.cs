@@ -100,7 +100,7 @@ namespace sonosxsnservice
 		{
 			StringBuilder Output = new StringBuilder ();
 
-			Output.Append (@"<?xml version=""1.0"" encoding=""UTF-8""?><SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:ns1=""http://www.sonos.com/Services/1.1""><SOAP-ENV:Body><ns1:getMetadataResponse><ns1:getMetadataResult><ns1:index>0</ns1:index><ns1:count>3</ns1:count><ns1:total>3</ns1:total>");
+			Output.Append (@"<?xml version=""1.0"" encoding=""UTF-8""?><SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"" xmlns:ns1=""http://www.sonos.com/Services/1.1""><SOAP-ENV:Body><ns1:getMetadataResponse><ns1:getMetadataResult><ns1:index>0</ns1:index><ns1:count>1</ns1:count><ns1:total>1</ns1:total>");
 
 			// Live Directory
 			Output.Append (@"<ns1:mediaCollection><ns1:id>LIVE</ns1:id><ns1:itemType>collection</ns1:itemType><ns1:title>");
