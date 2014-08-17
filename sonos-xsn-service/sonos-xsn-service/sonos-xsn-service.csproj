@@ -36,8 +36,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="xsnservice.cs" />
-    <Compile Include="xenim streaming service\xsn-live-feed.cs" />
     <Compile Include="xenim streaming service\xsnDeserializer.cs" />
+    <Compile Include="xenim streaming service\model\xsn-live-feed.cs" />
+    <Compile Include="xenim streaming service\model\xsn-upcoming-feed.cs" />
+    <Compile Include="xenim streaming service\model\xsn-recent-feed.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -58,5 +60,6 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
     <Folder Include="xenim streaming service\" />
+    <Folder Include="xenim streaming service\model\" />
   </ItemGroup>
 </Project>
