@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -40,6 +41,7 @@
     <Compile Include="xenim streaming service\model\xsn-live-feed.cs" />
     <Compile Include="xenim streaming service\model\xsn-upcoming-feed.cs" />
     <Compile Include="xenim streaming service\model\xsn-recent-feed.cs" />
+    <Compile Include="SOAP Service\HTTPServer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -63,5 +65,6 @@
     <Folder Include="Configuration\" />
     <Folder Include="xenim streaming service\" />
     <Folder Include="xenim streaming service\model\" />
+    <Folder Include="SOAP Service\" />
   </ItemGroup>
 </Project>

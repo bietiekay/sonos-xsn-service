@@ -2,5 +2,7 @@
 	"poll_xsn_interval_seconds": 5,
 	"xsn_upcoming_feed_url": "http://feeds.streams.xenim.de/upcoming/json/",
 	"xsn_recent_feed_url": "http://feeds.streams.xenim.de/recent/json/",
-	"xsn_live_feed_url": "http://feeds.streams.xenim.de/live/json/"
+	"xsn_live_feed_url": "http://feeds.streams.xenim.de/live/json/",
+	"http_listening_port": 8080,
+	"http_listening_ip": "127.0.0.1"
 }
