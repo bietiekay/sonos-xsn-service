@@ -73,6 +73,7 @@ namespace sonosxsnservice.HTTP
 					break;
 				case "GETMETADATA":
 					Console.WriteLine("getMetadata called");
+					SMAPIAnswer = SMAPI.getMetadata(xsnCurrentData, data);
 					break;
 				case "GETMEDIAMETADATA":
 					Console.WriteLine ("getMediaMetadata called");

@@ -105,7 +105,9 @@ namespace sonosxsnservice.HTTP {
 
 				string value = line.Substring(pos, line.Length - pos);
 				//Console.WriteLine("header: {0}:{1}",name,value);
-				httpHeaders[name] = value;
+
+
+				httpHeaders[name.ToUpper()] = value;
 			}
 		}
 
@@ -124,8 +126,10 @@ namespace sonosxsnservice.HTTP {
 			//Console.WriteLine("get post data start");
 			int content_len = 0;
 			MemoryStream ms = new MemoryStream();
-			if (this.httpHeaders.ContainsKey("Content-Length")) {
-				content_len = Convert.ToInt32(this.httpHeaders["Content-Length"]);
+
+			// believe it or not - SONOS sends upper case, non standard http headers...narf!
+			if (this.httpHeaders.ContainsKey("CONTENT-LENGTH")) {
+				content_len = Convert.ToInt32(this.httpHeaders["CONTENT-LENGTH"]);
 				if (content_len > MAX_POST_SIZE) {
 					throw new Exception(
 						String.Format("POST Content-Length({0}) too big for this simple server",

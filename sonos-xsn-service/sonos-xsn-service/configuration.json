@@ -4,5 +4,5 @@
 	"xsn_recent_feed_url": "http://feeds.streams.xenim.de/recent/json/",
 	"xsn_live_feed_url": "http://feeds.streams.xenim.de/live/json/",
 	"http_listening_port": 8080,
-	"http_listening_ip": "127.0.0.1"
+	"http_listening_ip": "0.0.0.0"
 }
