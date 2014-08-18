@@ -35,25 +35,31 @@ namespace sonosxsnservice
 					// update and act...
 
 					// Live Feed
-					CurrentLiveFeed = xsnDeserializer.UpdateLiveFeed(myConfiguration.GetLiveFeedURL());
-					/*if (CurrentLiveFeed != null)
-						Console.WriteLine("Updated xsn Live Feed - "+CurrentLiveFeed.items.Count+" streams online");
-					*/
+					xsn_live_feed UpdatedCurrentLiveFeed = xsnDeserializer.UpdateLiveFeed(myConfiguration.GetLiveFeedURL());
+					if (UpdatedCurrentLiveFeed != null)
+					{
+						//Console.WriteLine("Updated xsn Live Feed - "+CurrentLiveFeed.items.Count+" streams online");
+						CurrentLiveFeed = UpdatedCurrentLiveFeed;
+					}
 					// Upcoming Feed
-					CurrentUpcomingFeed = xsnDeserializer.UpdateUpcomingFeed(myConfiguration.GetUpcomingFeedURL());
-					/*if (CurrentUpcomingFeed != null)
-						Console.WriteLine("Updated xsn Upcoming Feed - "+CurrentUpcomingFeed.items.Count+" streams upcoming");
-					*/
+					xsn_upcoming_feed UpdatedCurrentUpcomingFeed = xsnDeserializer.UpdateUpcomingFeed(myConfiguration.GetUpcomingFeedURL());
+					if (UpdatedCurrentUpcomingFeed != null)
+					{
+						//Console.WriteLine("Updated xsn Upcoming Feed - "+CurrentUpcomingFeed.items.Count+" streams upcoming");
+						CurrentUpcomingFeed = UpdatedCurrentUpcomingFeed;
+					}
 					// Recent Feed
-					CurrentRecentFeed = xsnDeserializer.UpdateRecentFeed(myConfiguration.GetRecentFeedURL());
-					/*if (CurrentRecentFeed != null)
-						Console.WriteLine("Updated xsn Recent Feed - "+CurrentRecentFeed.items.Count+" streams done");
-					*/
+					xsn_recent_feed UpdatedCurrentRecentFeed = xsnDeserializer.UpdateRecentFeed(myConfiguration.GetRecentFeedURL());
+					if (UpdatedCurrentRecentFeed != null)
+					{
+						//Console.WriteLine("Updated xsn Recent Feed - "+CurrentRecentFeed.items.Count+" streams done");
+						CurrentRecentFeed = UpdatedCurrentRecentFeed;
+					}
 				}
 				catch(Exception e)
 				{
 					// pokemon handling, catching them all, because we want this to run "unlimitedly"
-					Console.WriteLine ("Exception: "+e.Message);
+					//Console.WriteLine ("Exception: "+e.Message);
 				}
 				Thread.Sleep (myConfiguration.GetPollingInterval()*1000);
 			}
