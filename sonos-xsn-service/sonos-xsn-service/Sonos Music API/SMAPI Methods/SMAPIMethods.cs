@@ -15,7 +15,7 @@ namespace sonosxsnservice
 		public static String GetLastUpdate (xsnservice xsnService, String PostInputData)
 		{
 			// this will always output the same response / nothing interesting to see here.
-			String Response = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getLastUpdateResponse><ns1:getLastUpdateResult><ns1:catalog>" + DateTime.Now.Ticks+"</ns1:catalog><ns1:favorites>0</ns1:favorites><ns1:pollInterval>30</ns1:pollInterval></ns1:getLastUpdateResult></ns1:getLastUpdateResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>";
+			String Response = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getLastUpdateResponse><ns1:getLastUpdateResult><ns1:catalog>" + DateTime.Now.Minute+"</ns1:catalog><ns1:favorites>0</ns1:favorites><ns1:pollInterval>30</ns1:pollInterval></ns1:getLastUpdateResult></ns1:getLastUpdateResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>";
 			return Response;
 		}
 			
