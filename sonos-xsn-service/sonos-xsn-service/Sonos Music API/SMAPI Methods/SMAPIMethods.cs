@@ -176,7 +176,7 @@ namespace sonosxsnservice
 					Elements.Append ("<ns1:mediaMetadata><ns1:id>RECENT:" + Item.unique_id + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + Item.title + "</ns1:title>");
 					Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist />");
 					Elements.Append ("<ns1:albumId>ALBUM:" + Item.unique_id + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
-					Elements.Append ("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata>");
+					Elements.Append ("<ns1:canPlay>false</ns1:canPlay></ns1:trackMetadata>");
 					Elements.Append ("</ns1:mediaMetadata>");
 				}
 			}
@@ -211,7 +211,7 @@ namespace sonosxsnservice
 					Elements.Append ("<ns1:mediaMetadata><ns1:id>UPCOMING:" + Item.unique_id + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + Item.title + "</ns1:title>");
 					Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist />");
 					Elements.Append ("<ns1:albumId>ALBUM:" + Item.unique_id + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
-					Elements.Append ("<ns1:canPlay>false</ns1:canPlay><ns1:canSkip>false</ns1:canSkip></ns1:trackMetadata>");
+					Elements.Append ("<ns1:canPlay>false</ns1:canPlay></ns1:trackMetadata>");
 					Elements.Append ("</ns1:mediaMetadata>");
 				}
 			}
