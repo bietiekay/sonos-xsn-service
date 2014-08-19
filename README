@@ -13,9 +13,19 @@ it's great interface.
 This application is meant to run on a server reachable by your SONOS system. It will watch out for currently running 
 live streams on xsn and allows you to listen to them live.
 
-How to set-up
-==============
+How to set-up without compiling
+================================
+
+Just follow the instructions given on: http://www.schrankmonster.de/2014/08/19/music-service-sonos-xenim-streaming-network/
+
+How to set-up with compiling
+=============================
 
 Pre-Requisites:
 - .net 4.0 Framework (Windows) or Mono >3.2 (Linux, MacOS)
 
+Step 1: Clone
+Step 2: change into the sonos-xsn-service/sonos-xsn-service folder.
+Step 3: On Windows run "msbuild" on Linux/OSX run xbuild on the sonos-xsn-service.sln file.
+Step 4: go to the bin/Debug directory and change the configuration.json file accordingly. 
+Step 5: Run it!
