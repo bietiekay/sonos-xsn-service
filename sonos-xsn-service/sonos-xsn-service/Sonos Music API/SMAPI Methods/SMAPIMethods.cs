@@ -233,6 +233,9 @@ namespace sonosxsnservice
 
 		public static String getMediaMetadata (xsnservice xsnService, String PostInputData)
 		{
+			// debugging
+			Console.WriteLine ("getMediaMetadata PostInput: " + PostInputData);
+
 			StringBuilder Output = new StringBuilder ();
 			// get the Directory
 			String ItemID = PostInputData.Remove (0, PostInputData.IndexOf ("<id>") + 4);
