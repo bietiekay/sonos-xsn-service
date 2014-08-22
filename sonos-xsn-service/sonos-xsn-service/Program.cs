@@ -11,6 +11,7 @@ namespace sonosxsnservice
 			Console.WriteLine ("SONOS xenim streaming service integration");
 			Console.WriteLine ("(C) Daniel Kirstenpfad 2014 - http://www.technology-ninja.com");
 			Console.WriteLine ();
+			ConsoleOutputLogger.verbose = true;
 
 			Configuration myConfiguration = new Configuration ("configuration.json");
 
