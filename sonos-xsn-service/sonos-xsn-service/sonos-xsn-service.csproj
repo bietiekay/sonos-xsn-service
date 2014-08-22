@@ -44,6 +44,7 @@
     <Compile Include="Sonos Music API\HTTPServer.cs" />
     <Compile Include="Sonos Music API\HandleSMAPIRequests.cs" />
     <Compile Include="Sonos Music API\SMAPI Methods\SMAPIMethods.cs" />
+    <Compile Include="ConsoleOutputLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

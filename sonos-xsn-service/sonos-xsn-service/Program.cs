@@ -17,7 +17,7 @@ namespace sonosxsnservice
 			#region Start-Up Main-Event Loop
 
 			#region xenim streaming network updater thread 
-			Console.WriteLine("Starting xsn updater...");
+			ConsoleOutputLogger.WriteLine("Starting xsn updater...");
 
 			xsnservice _Thread = new xsnservice(myConfiguration);
 			Thread xsnServiceThread = new Thread(new ThreadStart(_Thread.Run));
@@ -26,7 +26,7 @@ namespace sonosxsnservice
 			#endregion 
 
 			#region built-in HTTP server
-			Console.WriteLine("Starting http server...");
+			ConsoleOutputLogger.WriteLine("Starting http server...");
 			HttpServer httpServer;
 
 			httpServer = new SonosSMAPIServer(myConfiguration.GetHTTPListeningIP(),myConfiguration.GetHTTPListeningPort(), _Thread);

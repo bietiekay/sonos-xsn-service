@@ -62,7 +62,7 @@ namespace sonosxsnservice.HTTP {
 					handlePOSTRequest();
 				}
 			} catch (Exception e) {
-				Console.WriteLine("Exception: " + e.ToString());
+				ConsoleOutputLogger.WriteLine("Exception: " + e.ToString());
 				writeFailure();
 			}
 			outputStream.Flush();

@@ -67,20 +67,20 @@ namespace sonosxsnservice
 			switch (Directory.ToUpper())
 			{
 			case "ROOT":
-				Console.WriteLine ("Root Directory");
+				ConsoleOutputLogger.WriteLine ("Root Directory");
 				Output = generateRootDirectory (xsnService);
 				//Output = TestGenerator ();
 				break;
 			case "LIVE":
-				Console.WriteLine ("Live Directory");
+				ConsoleOutputLogger.WriteLine ("Live Directory");
 				Output = generateLiveDirectory (xsnService);
 				break;
 			case "RECENT":
-				Console.WriteLine ("Recent Directory");
+				ConsoleOutputLogger.WriteLine ("Recent Directory");
 				Output = generateRecentDirectory (xsnService);
 				break;
 			case "UPCOMING":
-				Console.WriteLine ("Upcoming Directory");
+				ConsoleOutputLogger.WriteLine ("Upcoming Directory");
 				Output = generateUpcomingDirectory (xsnService);
 				break;
 			default:
@@ -234,15 +234,18 @@ namespace sonosxsnservice
 		public static String getMediaMetadata (xsnservice xsnService, String PostInputData)
 		{
 			// debugging
-			Console.WriteLine ("getMediaMetadata PostInput: " + PostInputData);
+			//ConsoleOutputLogger.WriteLine ("getMediaMetadata PostInput: " + PostInputData);
 
 			StringBuilder Output = new StringBuilder ();
 			// get the Directory
 			String ItemID = PostInputData.Remove (0, PostInputData.IndexOf ("<id>") + 4);
 			ItemID = ItemID.Substring(0,ItemID.IndexOf ("</id>"));
-
-			String ItemType = ItemID.Remove (ItemID.IndexOf (':'));
-			ItemID = ItemID.Remove (0, ItemID.IndexOf (':')+1);
+			String ItemType;
+			if (ItemID.IndexOf (':') > 0) {
+				ItemType = ItemID.Remove (ItemID.IndexOf (':'));
+				ItemID = ItemID.Remove (0, ItemID.IndexOf (':') + 1);
+			} else
+				return null;
 
 			// find that item
 

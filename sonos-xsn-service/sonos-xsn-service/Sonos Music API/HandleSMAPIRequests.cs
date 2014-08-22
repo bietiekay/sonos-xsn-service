@@ -61,30 +61,30 @@ namespace sonosxsnservice.HTTP
 				String SOAPACTION = rawSOAPACTION.Remove (0, rawSOAPACTION.LastIndexOf ("#")+1);
 				SOAPACTION = SOAPACTION.Remove(SOAPACTION.Length-1);
 
-				Console.WriteLine (SOAPACTION.ToUpper ());
+				ConsoleOutputLogger.WriteLine (SOAPACTION.ToUpper ());
 
 				String SMAPIAnswer = "";
 
 				switch (SOAPACTION.ToUpper())
 				{
 				case "GETLASTUPDATE":
-					Console.WriteLine ("GetLastUpdate called");
+					ConsoleOutputLogger.WriteLine ("GetLastUpdate called");
 					SMAPIAnswer = SMAPI.GetLastUpdate (xsnCurrentData, data);
 					break;
 				case "GETMETADATA":
-					Console.WriteLine("getMetadata called");
+					ConsoleOutputLogger.WriteLine("getMetadata called");
 					SMAPIAnswer = SMAPI.getMetadata(xsnCurrentData, data);
 					break;
 				case "GETMEDIAMETADATA":
-					Console.WriteLine ("getMediaMetadata called");
+					ConsoleOutputLogger.WriteLine ("getMediaMetadata called");
 					SMAPIAnswer = SMAPI.getMediaMetadata (xsnCurrentData, data);
 					break;
 				case "GETMEDIAURI":
-					Console.WriteLine ("getMediaURI called");
+					ConsoleOutputLogger.WriteLine ("getMediaURI called");
 					SMAPIAnswer = SMAPI.getMediaURI (xsnCurrentData, data);
 					break;
 				default:
-					Console.WriteLine ("Unknown: " + SOAPACTION);
+					ConsoleOutputLogger.WriteLine ("Unknown: " + SOAPACTION);
 					break;
 				}
 
