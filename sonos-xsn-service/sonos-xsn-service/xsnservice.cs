@@ -20,6 +20,7 @@ namespace sonosxsnservice
 			CurrentLiveFeed = null;
 			CurrentRecentFeed = null;
 			CurrentUpcomingFeed = null;
+			locker = new object ();
 		}
 
 		public void Shutdown()

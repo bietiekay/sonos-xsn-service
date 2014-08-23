@@ -55,7 +55,7 @@ namespace sonosxsnservice.HTTP
 				String SOAPACTION = rawSOAPACTION.Remove (0, rawSOAPACTION.LastIndexOf ("#")+1);
 				SOAPACTION = SOAPACTION.Remove(SOAPACTION.Length-1);
 
-				ConsoleOutputLogger.WriteLine (SOAPACTION.ToUpper ());
+				//ConsoleOutputLogger.WriteLine (SOAPACTION.ToUpper ());
 
 				String SMAPIAnswer = "";
 
