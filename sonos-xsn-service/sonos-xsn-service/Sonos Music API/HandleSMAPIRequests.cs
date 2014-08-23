@@ -38,14 +38,8 @@ namespace sonosxsnservice.HTTP
 		}
 
 		public override void handlePOSTRequest(HttpProcessor p, StreamReader inputData) {
-			Console.WriteLine("POST request: {0}", p.http_url);
 			string data = inputData.ReadToEnd();
 
-			/*Console.WriteLine (data);
-			foreach(String Hashvalue in p.httpHeaders.Values)
-			{
-				Console.WriteLine (Hashvalue);
-			}*/
 			// this is where the POST requests are handled, regardless of the actual URL
 
 			// step 1: find out which SMAPI method is called by taking a look at the SOAPACTION Header
@@ -68,23 +62,23 @@ namespace sonosxsnservice.HTTP
 				switch (SOAPACTION.ToUpper())
 				{
 				case "GETLASTUPDATE":
-					ConsoleOutputLogger.WriteLine ("GetLastUpdate called");
+					//ConsoleOutputLogger.WriteLine ("GetLastUpdate called");
 					SMAPIAnswer = SMAPI.GetLastUpdate (xsnCurrentData, data);
 					break;
 				case "GETMETADATA":
-					ConsoleOutputLogger.WriteLine("getMetadata called");
+					//ConsoleOutputLogger.WriteLine("getMetadata called");
 					SMAPIAnswer = SMAPI.getMetadata(xsnCurrentData, data);
 					break;
 				case "GETMEDIAMETADATA":
-					ConsoleOutputLogger.WriteLine ("getMediaMetadata called");
+					//ConsoleOutputLogger.WriteLine ("getMediaMetadata called");
 					SMAPIAnswer = SMAPI.getMediaMetadata (xsnCurrentData, data);
 					break;
 				case "GETMEDIAURI":
-					ConsoleOutputLogger.WriteLine ("getMediaURI called");
+					//ConsoleOutputLogger.WriteLine ("getMediaURI called");
 					SMAPIAnswer = SMAPI.getMediaURI (xsnCurrentData, data);
 					break;
 				default:
-					ConsoleOutputLogger.WriteLine ("Unknown: " + SOAPACTION);
+					//ConsoleOutputLogger.WriteLine ("Unknown: " + SOAPACTION);
 					break;
 				}
 
@@ -94,9 +88,9 @@ namespace sonosxsnservice.HTTP
 					p.outputStream.WriteLine (SMAPIAnswer);
 				} else
 					p.writeFailure ();
-
 			}
+			else
+				p.writeFailure ();
 		}
 	}
 }
-

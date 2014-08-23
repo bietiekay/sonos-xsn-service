@@ -11,6 +11,7 @@ namespace sonosxsnservice
 		private xsn_live_feed CurrentLiveFeed;
 		private xsn_recent_feed CurrentRecentFeed;
 		private xsn_upcoming_feed CurrentUpcomingFeed;
+		public object locker;	// used to lock read/writes to the data objects above
 
 		public xsnservice (Configuration incomingConfiguration)
 		{
@@ -34,32 +35,46 @@ namespace sonosxsnservice
 				try{
 					// update and act...
 
-					// Live Feed
+					#region Live Feed
 					xsn_live_feed UpdatedCurrentLiveFeed = xsnDeserializer.UpdateLiveFeed(myConfiguration.GetLiveFeedURL());
 					if (UpdatedCurrentLiveFeed != null)
 					{
 						//Console.WriteLine("Updated xsn Live Feed - "+CurrentLiveFeed.items.Count+" streams online");
-						CurrentLiveFeed = UpdatedCurrentLiveFeed;
+						lock(locker)
+						{
+							CurrentLiveFeed = UpdatedCurrentLiveFeed;
+						}
 					}
-					// Upcoming Feed
+					#endregion
+
+					#region Upcoming Feed
 					xsn_upcoming_feed UpdatedCurrentUpcomingFeed = xsnDeserializer.UpdateUpcomingFeed(myConfiguration.GetUpcomingFeedURL());
 					if (UpdatedCurrentUpcomingFeed != null)
 					{
 						//Console.WriteLine("Updated xsn Upcoming Feed - "+CurrentUpcomingFeed.items.Count+" streams upcoming");
-						CurrentUpcomingFeed = UpdatedCurrentUpcomingFeed;
+						lock(locker)
+						{
+							CurrentUpcomingFeed = UpdatedCurrentUpcomingFeed;
+						}
 					}
-					// Recent Feed
+					#endregion
+
+					#region Recent Feed
 					xsn_recent_feed UpdatedCurrentRecentFeed = xsnDeserializer.UpdateRecentFeed(myConfiguration.GetRecentFeedURL());
 					if (UpdatedCurrentRecentFeed != null)
 					{
 						//Console.WriteLine("Updated xsn Recent Feed - "+CurrentRecentFeed.items.Count+" streams done");
-						CurrentRecentFeed = UpdatedCurrentRecentFeed;
+						lock(locker)
+						{
+							CurrentRecentFeed = UpdatedCurrentRecentFeed;
+						}
 					}
+					#endregion
 				}
-				catch(Exception e)
+				catch(Exception)
 				{
 					// pokemon handling, catching them all, because we want this to run "unlimitedly"
-					//Console.WriteLine ("Exception: "+e.Message);
+					//ConsoleOutputLogger.WriteLine ("SMAPIMethods-Exception: "+e.Message);
 				}
 				Thread.Sleep (myConfiguration.GetPollingInterval()*1000);
 			}

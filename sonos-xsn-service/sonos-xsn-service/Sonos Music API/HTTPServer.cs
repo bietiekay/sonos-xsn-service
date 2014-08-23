@@ -196,13 +196,9 @@ namespace sonosxsnservice.HTTP {
 				Thread.Sleep(1);
 			}
 		}
-
 		public abstract void handleGETRequest(HttpProcessor p);
 		public abstract void handlePOSTRequest(HttpProcessor p, StreamReader inputData);
 	}
-
-
-
 }
 
 
