@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Xml;
 
 namespace sonosxsnservice
 {
@@ -12,6 +13,32 @@ namespace sonosxsnservice
 	/// </summary>
 	public static class SMAPI
 	{
+		#region Helper
+		private static String ShortenURLTotheEssence(String URL)
+		{
+			Uri baseUri = new Uri(URL);
+
+			return baseUri.AbsolutePath;
+		}
+		private static String EncodeXMLString(string value)
+		{
+			System.Xml.XmlWriterSettings settings = new System.Xml.XmlWriterSettings 
+			{
+				ConformanceLevel = System.Xml.ConformanceLevel.Fragment
+			};
+
+			StringBuilder builder = new StringBuilder();
+
+			using (var writer = System.Xml.XmlWriter.Create(builder, settings))
+			{
+				writer.WriteString(value);
+			}
+
+			return builder.ToString();
+		}
+		#endregion
+
+
 		#region GetLastUpdate
 		public static String GetLastUpdate (xsnservice xsnService, String PostInputData)
 		{
@@ -146,9 +173,9 @@ namespace sonosxsnservice
 						if (Item.streams.Count == 1)
 						{
 							// this is when the live show item only has one stream
-							Elements.Append ("<ns1:mediaMetadata><ns1:id>LIVE:" + Item.unique_id + ":0</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + Item.title + "</ns1:title>");
-							Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist />");
-							Elements.Append ("<ns1:albumId>ALBUM:" + Item.unique_id + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
+							Elements.Append ("<ns1:mediaMetadata><ns1:id>LIVE:" + EncodeXMLString(Item.unique_id) + ":0</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + EncodeXMLString(Item.title) + "</ns1:title>");
+							Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + EncodeXMLString(Item.author_name) + "</ns1:artistId><ns1:artist />");
+							Elements.Append ("<ns1:albumId>ALBUM:" + EncodeXMLString(Item.unique_id) + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
 							Elements.Append ("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata>");
 							Elements.Append ("</ns1:mediaMetadata>");
 							Counter++;
@@ -159,8 +186,8 @@ namespace sonosxsnservice
 							if (Item.title != null) {
 								Counter++;
 
-								Elements.Append (@"<ns1:mediaCollection><ns1:id>LIVESTREAM:" + Item.unique_id + "</ns1:id><ns1:itemType>collection</ns1:itemType><ns1:title>");
-								Elements.Append (Item.title);
+								Elements.Append (@"<ns1:mediaCollection><ns1:id>LIVESTREAM:" + EncodeXMLString(Item.unique_id) + "</ns1:id><ns1:itemType>collection</ns1:itemType><ns1:title>");
+								Elements.Append (EncodeXMLString(Item.title));
 								Elements.Append (@"</ns1:title>");
 								Elements.Append ("<ns1:canPlay>false</ns1:canPlay></ns1:mediaCollection>");
 							}
@@ -207,10 +234,10 @@ namespace sonosxsnservice
 						if (Item.title != null) {
 							foreach (String stream in Item.streams) {
 								Counter++;
-
-								Elements.Append ("<ns1:mediaMetadata><ns1:id>LIVE:" + Item.unique_id + ":"+StreamCounter+"</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + stream + "</ns1:title>");
-								Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist />");
-								Elements.Append ("<ns1:albumId>ALBUM:" + Item.unique_id + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
+								//Uri baseUri = new Uri(stream);
+								Elements.Append ("<ns1:mediaMetadata><ns1:id>LIVE:" + EncodeXMLString(Item.unique_id) + ":"+StreamCounter+"</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + EncodeXMLString(ShortenURLTotheEssence(stream)) + "</ns1:title>");
+								Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + EncodeXMLString(Item.author_name) + "</ns1:artistId><ns1:artist />");
+								Elements.Append ("<ns1:albumId>ALBUM:" + EncodeXMLString(Item.unique_id) + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
 								Elements.Append ("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata>");
 								Elements.Append ("</ns1:mediaMetadata>");
 								StreamCounter++;
@@ -251,9 +278,9 @@ namespace sonosxsnservice
 				{
 					if (Item.title != null) {
 						Counter++;
-						Elements.Append ("<ns1:mediaMetadata><ns1:id>RECENT:" + Item.unique_id + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + Item.title + "</ns1:title>");
-						Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist />");
-						Elements.Append ("<ns1:albumId>ALBUM:" + Item.unique_id + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
+						Elements.Append ("<ns1:mediaMetadata><ns1:id>RECENT:" + EncodeXMLString(Item.unique_id) + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + EncodeXMLString(Item.title) + "</ns1:title>");
+						Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + EncodeXMLString(Item.author_name) + "</ns1:artistId><ns1:artist />");
+						Elements.Append ("<ns1:albumId>ALBUM:" + EncodeXMLString(Item.unique_id) + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
 						Elements.Append ("<ns1:canPlay>true</ns1:canPlay></ns1:trackMetadata>");
 						Elements.Append ("</ns1:mediaMetadata>");
 					}
@@ -291,9 +318,9 @@ namespace sonosxsnservice
 				{
 					if (Item.title != null) {
 						Counter++;
-						Elements.Append ("<ns1:mediaMetadata><ns1:id>UPCOMING:" + Item.unique_id + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + Item.title + "</ns1:title>");
-						Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist />");
-						Elements.Append ("<ns1:albumId>ALBUM:" + Item.unique_id + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
+						Elements.Append ("<ns1:mediaMetadata><ns1:id>UPCOMING:" + EncodeXMLString(Item.unique_id) + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + EncodeXMLString(Item.title) + "</ns1:title>");
+						Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + EncodeXMLString(Item.author_name) + "</ns1:artistId><ns1:artist />");
+						Elements.Append ("<ns1:albumId>ALBUM:" + EncodeXMLString(Item.unique_id) + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
 						Elements.Append ("<ns1:canPlay>true</ns1:canPlay></ns1:trackMetadata>");
 						Elements.Append ("</ns1:mediaMetadata>");
 					}
@@ -353,8 +380,8 @@ namespace sonosxsnservice
 							Output.Append ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body>");
 							Output.Append ("<ns1:getMediaMetadataResponse><ns1:getMediaMetadataResult>");
 
-							Output.Append ("<ns1:id>LIVE:" + Item.unique_id + ":" + StreamNumber + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + Item.title + "</ns1:title><ns1:mimeType>audio/mpeg3</ns1:mimeType>");
-							Output.Append ("<ns1:trackMetadata><ns1:artistId>" + Item.author_name + "</ns1:artistId><ns1:artist /><ns1:albumId>" + Item.channel + "</ns1:albumId>");
+							Output.Append ("<ns1:id>LIVE:" + EncodeXMLString(Item.unique_id) + ":" + StreamNumber + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + EncodeXMLString(Item.title) + "</ns1:title><ns1:mimeType>audio/mpeg3</ns1:mimeType>");
+							Output.Append ("<ns1:trackMetadata><ns1:artistId>" + EncodeXMLString(Item.author_name) + "</ns1:artistId><ns1:artist /><ns1:albumId>" + EncodeXMLString(Item.channel) + "</ns1:albumId>");
 							Output.Append ("<ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.icon + "</ns1:albumArtURI>");
 							Output.Append ("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata><ns1:dynamic><ns1:property><ns1:name>isStarred</ns1:name><ns1:value>5</ns1:value>");
 							Output.Append ("</ns1:property><ns1:property><ns1:name>isRead</ns1:name><ns1:value>true</ns1:value></ns1:property></ns1:dynamic></ns1:getMediaMetadataResult></ns1:getMediaMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
