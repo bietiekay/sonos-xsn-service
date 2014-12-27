@@ -19,6 +19,11 @@ namespace sonosxsnservice
 		public string website { get; set; }
 		public string end { get; set; }
 		public string current_song { get; set; }
+
+		public xsn_live_feed_item()
+		{
+			icon = "http://media.streams.xenim.de/show-icons/logo_1.png";
+		}
 	}
 
 	public class xsn_live_feed
