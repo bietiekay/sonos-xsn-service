@@ -47,6 +47,7 @@
     <Compile Include="Sonos Music API\HandleSMAPIRequests.cs" />
     <Compile Include="Sonos Music API\SMAPI Methods\SMAPIMethods.cs" />
     <Compile Include="ConsoleOutputLogger.cs" />
+    <Compile Include="xenim streaming service\model\relivebot.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

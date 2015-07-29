@@ -9,7 +9,7 @@ namespace sonosxsnservice
 		public static void Main (string[] args)
 		{
 			Console.WriteLine ("SONOS xenim streaming service integration");
-			Console.WriteLine ("(C) Daniel Kirstenpfad 2014 - http://www.technology-ninja.com");
+			Console.WriteLine ("(C) Daniel Kirstenpfad 2014-2015 - http://www.technology-ninja.com");
 			Console.WriteLine ();
 			ConsoleOutputLogger.verbose = true;
 

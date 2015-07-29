@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Xml;
+using relivebot;
 
 namespace sonosxsnservice
 {
@@ -137,7 +138,7 @@ namespace sonosxsnservice
 
 				// Recent Directory
 				Output.Append (@"<ns1:mediaCollection><ns1:id>RECENT</ns1:id><ns1:itemType>collection</ns1:itemType><ns1:title>");
-				Output.Append ("Recent Shows (" + xsnService.GetCurrentRecentFeed ().items.Count + ")");
+				Output.Append ("Recent Shows (" + xsnService.GetCurrentRecentReLiveBotFeed ().feeds.recent.Count + ")");
 				Output.Append (@"</ns1:title><ns1:canPlay>false</ns1:canPlay></ns1:mediaCollection>");
 
 				// Upcoming Directory
@@ -274,6 +275,40 @@ namespace sonosxsnservice
 
 			lock(xsnService.locker) {
 
+				foreach (relivebot.Recent Item in xsnService.GetCurrentRecentReLiveBotFeed ().feeds.recent)
+				{
+					if (Item.stream != null) {
+						Counter++;
+						Elements.Append ("<ns1:mediaMetadata><ns1:id>RECENT:" + EncodeXMLString(Item.id) + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + EncodeXMLString(Item.title) + "</ns1:title>");
+						Elements.Append ("<ns1:mimeType>audio/mpeg3</ns1:mimeType><ns1:trackMetadata><ns1:artistId>" + EncodeXMLString(Item.author.name) + "</ns1:artistId><ns1:artist />");
+						Elements.Append ("<ns1:albumId>ALBUM:" + EncodeXMLString(Item.id) + "</ns1:albumId><ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.author.cover + "</ns1:albumArtURI>");
+						Elements.Append ("<ns1:canPlay>true</ns1:canPlay></ns1:trackMetadata>");
+						Elements.Append ("</ns1:mediaMetadata>");
+					}
+				}
+			}
+
+			Output.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getMetadataResponse><ns1:getMetadataResult>");
+			Output.Append ("<ns1:index>0</ns1:index>");
+			Output.Append ("<ns1:count>" + Counter+ "</ns1:count>");
+			Output.Append ("<ns1:total>" + Counter + "</ns1:total>");
+
+			Output.Append (Elements.ToString ());
+
+			Output.Append ("</ns1:getMetadataResult></ns1:getMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+
+			return Output.ToString();
+		}
+
+		/// here comes the xenim recent directory generator
+		/*private static String generateRecentDirectory(xsnservice xsnService)
+		{
+			StringBuilder Output = new StringBuilder ();
+			StringBuilder Elements = new StringBuilder ();
+			Int32 Counter = 0;
+
+			lock(xsnService.locker) {
+
 				foreach (xsn_recent_feed_item Item in xsnService.GetCurrentRecentFeed().items)
 				{
 					if (Item.title != null) {
@@ -297,7 +332,7 @@ namespace sonosxsnservice
 			Output.Append ("</ns1:getMetadataResult></ns1:getMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
 
 			return Output.ToString();
-		}
+		}*/
 		#endregion
 
 		#region generateUpcomingDirectory
@@ -366,7 +401,6 @@ namespace sonosxsnservice
 				return null;
 
 			// find that item
-
 			if (ItemType == "LIVE") {
 
 				lock(xsnService.locker) {
@@ -391,7 +425,29 @@ namespace sonosxsnservice
 				return Output.ToString();
 			}
 
-			// TODO: add stuff here when Recent can be replayed, maybe in the future
+			if (ItemType == "RECENT") {
+
+				lock(xsnService.locker) {
+
+					// this is for the live feed mediafiles
+					foreach (relivebot.Recent Item in xsnService.GetCurrentRecentReLiveBotFeed ().feeds.recent)
+					{
+						if (Item.id == ItemID)
+						{
+							// found it, now find the right stream...
+							Output.Append ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body>");
+							Output.Append ("<ns1:getMediaMetadataResponse><ns1:getMediaMetadataResult>");
+
+							Output.Append ("<ns1:id>RECENT:" + EncodeXMLString(Item.id) + ":" + StreamNumber + "</ns1:id><ns1:itemType>stream</ns1:itemType><ns1:title>" + EncodeXMLString(Item.title) + "</ns1:title><ns1:mimeType>audio/mpeg3</ns1:mimeType>");
+							Output.Append ("<ns1:trackMetadata><ns1:artistId>" + EncodeXMLString(Item.author.name) + "</ns1:artistId><ns1:artist /><ns1:albumId>" + EncodeXMLString(Item.channel) + "</ns1:albumId>");
+							Output.Append ("<ns1:album></ns1:album><ns1:duration>0</ns1:duration><ns1:rating>5</ns1:rating><ns1:albumArtURI>" + Item.author.cover + "</ns1:albumArtURI>");
+							Output.Append ("<ns1:canPlay>true</ns1:canPlay><ns1:canSkip>true</ns1:canSkip></ns1:trackMetadata><ns1:dynamic><ns1:property><ns1:name>isStarred</ns1:name><ns1:value>5</ns1:value>");
+							Output.Append ("</ns1:property><ns1:property><ns1:name>isRead</ns1:name><ns1:value>true</ns1:value></ns1:property></ns1:dynamic></ns1:getMediaMetadataResult></ns1:getMediaMetadataResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+						}
+					}
+				}
+				return Output.ToString();
+			}
 
 			return "";
 		}
@@ -429,6 +485,20 @@ namespace sonosxsnservice
 
 					return Output.ToString ();
 				}
+
+				if (ItemType == "RECENT") {
+					foreach (relivebot.Recent Item in xsnService.GetCurrentRecentReLiveBotFeed ().feeds.recent) 
+					{
+						if (Item.id == ItemID) {
+							// found it!
+
+							Output.Append ("<?xml version=\"1.0\" encoding=\"UTF-8\"?><SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://www.sonos.com/Services/1.1\"><SOAP-ENV:Body><ns1:getMediaURIResponse><ns1:getMediaURIResult>" + Item.stream.mp3 + "</ns1:getMediaURIResult></ns1:getMediaURIResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>");
+						}
+					}
+
+					return Output.ToString ();
+				}
+
 			}
 
 			return "";

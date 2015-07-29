@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using relivebot;
 
 namespace sonosxsnservice
 {
@@ -11,6 +12,7 @@ namespace sonosxsnservice
 		private xsn_live_feed CurrentLiveFeed;
 		private xsn_recent_feed CurrentRecentFeed;
 		private xsn_upcoming_feed CurrentUpcomingFeed;
+		private relivebotFeeds CurrentRecentReliveBotFeed;
 		public object locker;	// used to lock read/writes to the data objects above
 
 		public xsnservice (Configuration incomingConfiguration)
@@ -20,6 +22,7 @@ namespace sonosxsnservice
 			CurrentLiveFeed = null;
 			CurrentRecentFeed = null;
 			CurrentUpcomingFeed = null;
+			CurrentRecentReliveBotFeed = null;
 			locker = new object ();
 		}
 
@@ -60,7 +63,8 @@ namespace sonosxsnservice
 					}
 					#endregion
 
-					#region Recent Feed
+					#region Recent Feed (XENIM)
+					/*
 					xsn_recent_feed UpdatedCurrentRecentFeed = xsnDeserializer.UpdateRecentFeed(myConfiguration.GetRecentFeedURL());
 					if (UpdatedCurrentRecentFeed != null)
 					{
@@ -69,7 +73,21 @@ namespace sonosxsnservice
 						{
 							CurrentRecentFeed = UpdatedCurrentRecentFeed;
 						}
+					}*/
+					#endregion
+
+					#region Recent Feed (reLiveBot)
+					relivebotFeeds UpdatedCurrentRecentReliveBotFeed = xsnDeserializer.UpdateRecentReLiveBotFeed(myConfiguration.GetReliveBotFeedURL());
+
+					if (UpdatedCurrentRecentReliveBotFeed != null)
+					{
+						//Console.WriteLine("Updated xsn Recent Feed - "+CurrentRecentFeed.items.Count+" streams done");
+						lock(locker)
+						{
+								CurrentRecentReliveBotFeed = UpdatedCurrentRecentReliveBotFeed;
+						}
 					}
+
 					#endregion
 				}
 				catch(Exception)
@@ -91,6 +109,11 @@ namespace sonosxsnservice
 		public xsn_recent_feed GetCurrentRecentFeed()
 		{
 			return CurrentRecentFeed;
+		}
+
+		public relivebotFeeds GetCurrentRecentReLiveBotFeed()
+		{
+			return CurrentRecentReliveBotFeed;
 		}
 
 		public xsn_upcoming_feed GetCurrentUpcomingFeed()

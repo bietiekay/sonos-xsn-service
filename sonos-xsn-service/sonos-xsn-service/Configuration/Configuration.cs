@@ -10,6 +10,7 @@ namespace sonosxsnservice
 		public string xsn_upcoming_feed_url { get; set; }
 		public string xsn_recent_feed_url { get; set; }
 		public string xsn_live_feed_url { get; set; }
+		public string relivebot_feed_url { get; set; }
 		public int http_listening_port { get; set; }
 		public string http_listening_ip { get; set; }
 	}
@@ -51,6 +52,11 @@ namespace sonosxsnservice
 		public String GetLiveFeedURL()
 		{
 			return myConfiguration.xsn_live_feed_url;
+		}
+
+		public String GetReliveBotFeedURL()
+		{
+			return myConfiguration.relivebot_feed_url;
 		}
 
 		public Int32 GetHTTPListeningPort()

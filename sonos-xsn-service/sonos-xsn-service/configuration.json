@@ -3,6 +3,7 @@
 	"xsn_upcoming_feed_url": "http://feeds.streams.xenim.de/upcoming/json/",
 	"xsn_recent_feed_url": "http://feeds.streams.xenim.de/recent/json/",
 	"xsn_live_feed_url": "http://feeds.streams.xenim.de/live/json/",
+	"relivebot_feed_url": "http://xenim.imake.io/feed",
 	"http_listening_port": 8080,
 	"http_listening_ip": "0.0.0.0"
 }
